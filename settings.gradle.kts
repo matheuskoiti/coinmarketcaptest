@@ -21,3 +21,7 @@ dependencyResolutionManagement {
 
 rootProject.name = "CoinMarketCap Test"
 include(":app")
+include(":feature:exchangelist")
+include(":feature:exchangedetail")
+include(":domain")
+include(":data")
