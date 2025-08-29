@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.studiomk.coinmarketcaptest.ui.theme.CoinMarketCapTestTheme
 import com.studiomk.data.di.dataModule
 import com.studiomk.domain.di.domainModule
+import com.studiomk.exchangelist.ui.ExchangeListScreen
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.GlobalContext.startKoin
@@ -26,8 +27,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             CoinMarketCapTestTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+                    ExchangeListScreen(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }

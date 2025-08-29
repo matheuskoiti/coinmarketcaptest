@@ -54,6 +54,8 @@ dependencies {
     implementation("io.insert-koin:koin-androidx-compose:4.0.0")
     implementation(project(":data"))
     implementation(project(":domain"))
+    implementation(project(":feature:exchangelist"))
+    implementation(project(":feature:exchangedetail"))
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

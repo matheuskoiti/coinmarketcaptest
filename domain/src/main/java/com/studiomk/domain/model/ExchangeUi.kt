@@ -1,6 +1,6 @@
 package com.studiomk.domain.model
 
-data class ExchangeUiObject(
+data class ExchangeUi(
     val id: String,
     val name: String,
     val logo: String,
