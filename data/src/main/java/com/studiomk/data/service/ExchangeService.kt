@@ -6,8 +6,8 @@ import retrofit2.http.Query
 
 interface ExchangeService {
 
-    @GET("/users")
+    @GET("/v1/exchange/info")
     suspend fun geExchangeList(
-        @Query("per_page") perPage: Int,
+        @Query("CMC_PRO_API_KEY") key: Int,
     ): List<Exchange>
 }

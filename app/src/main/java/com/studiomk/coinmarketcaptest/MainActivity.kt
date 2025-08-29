@@ -12,10 +12,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.studiomk.coinmarketcaptest.ui.theme.CoinMarketCapTestTheme
+import com.studiomk.data.di.dataModule
+import org.koin.android.ext.koin.androidContext
+import org.koin.android.ext.koin.androidLogger
+import org.koin.core.context.GlobalContext.startKoin
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        initKoin()
         enableEdgeToEdge()
         setContent {
             CoinMarketCapTestTheme {
@@ -26,6 +31,14 @@ class MainActivity : ComponentActivity() {
                     )
                 }
             }
+        }
+    }
+
+    private fun initKoin() {
+        startKoin {
+            androidLogger()
+            androidContext(applicationContext)
+            modules(dataModule)
         }
     }
 }
