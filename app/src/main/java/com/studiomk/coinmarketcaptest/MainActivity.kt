@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.studiomk.coinmarketcaptest.ui.theme.CoinMarketCapTestTheme
 import com.studiomk.data.di.dataModule
+import com.studiomk.domain.di.domainModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.GlobalContext.startKoin
@@ -39,6 +40,7 @@ class MainActivity : ComponentActivity() {
             androidLogger()
             androidContext(applicationContext)
             modules(dataModule)
+            modules(domainModule)
         }
     }
 }
