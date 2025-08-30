@@ -1,7 +1,10 @@
 package com.studiomk.domain.usecase
 
 import com.studiomk.data.repository.ExchangeRepository
+import com.studiomk.domain.extensions.formatDate
 import com.studiomk.domain.model.ExchangeUi
+import java.text.NumberFormat
+import java.util.Locale
 
 class GetListExchangeUseCase(
     private val exchangeRepository: ExchangeRepository
@@ -15,9 +18,10 @@ class GetListExchangeUseCase(
                 id = key,
                 name = exchange.name,
                 logo = exchange.logo,
-                spotVolumeSd = exchange.spotVolumeUsd,
-                dateLaunched = exchange.dateLaunched ?: ""
+                spotVolumeUsd = NumberFormat.getCurrencyInstance(Locale.US).format(exchange.spotVolumeUsd),
+                dateLaunched = exchange.dateLaunched?.formatDate() ?: ""
             )
         }
     }
+
 }

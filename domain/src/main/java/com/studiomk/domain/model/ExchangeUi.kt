@@ -4,6 +4,6 @@ data class ExchangeUi(
     val id: String,
     val name: String,
     val logo: String,
-    val spotVolumeSd: Double,
+    val spotVolumeUsd: String,
     val dateLaunched: String
 )

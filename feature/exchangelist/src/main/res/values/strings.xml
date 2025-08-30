@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="exchange_logo">Logo: %s</string>
-    <string name="exchange_name">Nome: %s</string>
-    <string name="exchange_date">Data de lançamento: %s</string>
-    <string name="exchange_spot_volume_usd">Volume a vista: $ %s</string>
+    <string name="exchange_logo">Logo</string>
+    <string name="exchange_date">Date launched: %s</string>
+    <string name="exchange_spot_volume_usd">Spot volume USD: %s</string>
 </resources>
