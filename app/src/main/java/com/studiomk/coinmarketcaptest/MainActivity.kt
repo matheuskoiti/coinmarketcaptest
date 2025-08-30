@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.studiomk.coinmarketcaptest.ui.theme.CoinMarketCapTestTheme
 import com.studiomk.data.di.dataModule
 import com.studiomk.domain.di.domainModule
+import com.studiomk.exchangelist.di.exchangeListModule
 import com.studiomk.exchangelist.ui.ExchangeListScreen
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
@@ -41,22 +42,7 @@ class MainActivity : ComponentActivity() {
             androidContext(applicationContext)
             modules(dataModule)
             modules(domainModule)
+            modules(exchangeListModule)
         }
-    }
-}
-
-@Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    CoinMarketCapTestTheme {
-        Greeting("Android")
     }
 }

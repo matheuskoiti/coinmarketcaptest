@@ -1,6 +1,6 @@
 package com.studiomk.domain.usecase
 
-import com.studiomk.data.ExchangeRepository
+import com.studiomk.data.repository.ExchangeRepository
 import com.studiomk.domain.model.ExchangeUi
 
 class GetListExchangeUseCase(
@@ -16,7 +16,7 @@ class GetListExchangeUseCase(
                 name = exchange.name,
                 logo = exchange.logo,
                 spotVolumeSd = exchange.spotVolumeUsd,
-                dateLaunched = exchange.dateLaunched
+                dateLaunched = exchange.dateLaunched ?: ""
             )
         }
     }

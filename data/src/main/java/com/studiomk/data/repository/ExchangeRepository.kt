@@ -1,4 +1,4 @@
-package com.studiomk.data
+package com.studiomk.data.repository
 
 import com.studiomk.data.model.ApiResponse
 import com.studiomk.data.service.ExchangeService
@@ -8,6 +8,8 @@ class ExchangeRepository(
 ) {
 
     suspend fun getExchangeList(): ApiResponse {
-        return exchangeService.geExchangeList("keyInHere")
+        val key = "keyHere"
+        val id = "270,12"
+        return exchangeService.geExchangeList(key, id)
     }
 }
