@@ -16,8 +16,11 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.studiomk.domain.model.ExchangeUi
+import com.studiomk.exchangelist.R
 import com.studiomk.exchangelist.viewmodel.ExchangeListViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -35,21 +38,44 @@ fun ExchangeListScreen(
             .padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        items(exchangeList) { item ->
-            Card(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .wrapContentHeight(),
-                elevation = CardDefaults.cardElevation(4.dp),
-                shape = RoundedCornerShape(12.dp)
-            ) {
-                Text(
-                    text = item.id,
-                    modifier = Modifier.padding(16.dp),
-                    style = MaterialTheme.typography.bodyLarge
-                )
-            }
+        items(exchangeList, key = { it.id }) { item ->
+            ExchangeCard(item)
         }
+    }
+}
+
+@Composable
+fun ExchangeCard(
+    exchangeUi: ExchangeUi,
+    modifier: Modifier = Modifier
+) {
+    Card(
+        modifier = modifier
+            .fillMaxWidth()
+            .wrapContentHeight(),
+        elevation = CardDefaults.cardElevation(4.dp),
+        shape = RoundedCornerShape(12.dp)
+    ) {
+        Text(
+            text = stringResource(R.string.exchange_name, exchangeUi.name),
+            modifier = Modifier.padding(16.dp),
+            style = MaterialTheme.typography.bodyLarge
+        )
+        Text(
+            text = stringResource(R.string.exchange_logo, exchangeUi.logo),
+            modifier = Modifier.padding(16.dp),
+            style = MaterialTheme.typography.bodyLarge
+        )
+        Text(
+            text = stringResource(R.string.exchange_spot_volume_usd, exchangeUi.spotVolumeSd),
+            modifier = Modifier.padding(16.dp),
+            style = MaterialTheme.typography.bodyLarge
+        )
+        Text(
+            text = stringResource(R.string.exchange_date, exchangeUi.dateLaunched),
+            modifier = Modifier.padding(16.dp),
+            style = MaterialTheme.typography.bodyLarge
+        )
     }
 }
 
