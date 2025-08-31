@@ -7,29 +7,34 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class ExchangeListViewModel(
     private val getListExchangeUseCase: GetListExchangeUseCase
 ) : ViewModel() {
 
+    private val _uiState = MutableStateFlow<ExchangeState>(ExchangeState.ExchangeLoading)
+    val uiState: StateFlow<ExchangeState> = _uiState.asStateFlow()
+
     init {
         getExchangeList()
     }
 
-    private val _uiState = MutableStateFlow(ExchangeState())
-    val uiState: StateFlow<ExchangeState> = _uiState.asStateFlow()
-
-    private fun getExchangeList() {
+    fun getExchangeList() {
         viewModelScope.launch(Dispatchers.IO) {
-            getListExchangeUseCase.invoke().let { list ->
-                _uiState.update { currentUiState ->
-                    currentUiState.copy(
+            _uiState.value = ExchangeState.ExchangeLoading
+            try {
+                getListExchangeUseCase.invoke().let { list ->
+                    _uiState.value = ExchangeState.ExchangeLoadedState(
                         exchangeList = list
                     )
                 }
+            } catch (e: Exception) {
+                _uiState.value = ExchangeState.ExchangeLoadError(
+                    errorMessage = e.message ?: "An error occurred"
+                )
             }
+
         }
     }
 }

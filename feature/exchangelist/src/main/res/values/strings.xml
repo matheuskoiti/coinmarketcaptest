@@ -3,4 +3,7 @@
     <string name="exchange_logo">Logo</string>
     <string name="exchange_date">Date launched: %s</string>
     <string name="exchange_spot_volume_usd">Spot volume USD: %s</string>
+    <string name="exchange_list_error">An error occurred: %s</string>
+    <string name="exchange_list_error_try_again">Try again</string>
+    <string name="exchange_list_loading">Loading exchange list!!</string>
 </resources>

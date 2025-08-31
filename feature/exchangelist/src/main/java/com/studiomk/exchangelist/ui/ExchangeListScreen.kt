@@ -1,23 +1,30 @@
 package com.studiomk.exchangelist.ui
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -29,6 +36,7 @@ import coil.request.ImageRequest
 import com.studiomk.domain.model.ExchangeUi
 import com.studiomk.exchangelist.R
 import com.studiomk.exchangelist.viewmodel.ExchangeListViewModel
+import com.studiomk.exchangelist.viewmodel.ExchangeState
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -37,8 +45,73 @@ fun ExchangeListScreen(
     viewModel: ExchangeListViewModel = koinViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val exchangeList = uiState.exchangeList
 
+    when(uiState) {
+        ExchangeState.ExchangeLoading -> {
+            LoadingScreen()
+        }
+        is ExchangeState.ExchangeLoadedState -> {
+            ExchangeList(uiState, modifier)
+        }
+        is ExchangeState.ExchangeLoadError -> {
+            ExchangeError(
+                errorMessage = (uiState as ExchangeState.ExchangeLoadError).errorMessage,
+                onTryAgainClick = { viewModel.getExchangeList() }
+            )
+        }
+    }
+}
+
+@Composable
+private fun LoadingScreen() {
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
+    ) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            CircularProgressIndicator()
+            Spacer(modifier = Modifier.height(16.dp))
+            Text(
+                text = stringResource(R.string.exchange_list_loading),
+                style = MaterialTheme.typography.bodyMedium
+            )
+        }
+    }
+}
+
+@Composable
+private fun ExchangeError(
+    errorMessage: String,
+    onTryAgainClick: () -> Unit
+) {
+    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+        Column(horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(
+                stringResource(
+                    R.string.exchange_list_error,
+                    errorMessage
+                )
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+            Button(
+                onClick = { onTryAgainClick.invoke() }
+            ) {
+                Text(
+                    text = stringResource(R.string.exchange_list_error_try_again),
+                    style = MaterialTheme.typography.bodyLarge
+                )
+            }
+        }
+
+    }
+}
+
+@Composable
+private fun ExchangeList(
+    uiState: ExchangeState,
+    modifier: Modifier
+) {
+    val exchangeList = (uiState as ExchangeState.ExchangeLoadedState).exchangeList
     LazyColumn(
         modifier = modifier
             .fillMaxSize()

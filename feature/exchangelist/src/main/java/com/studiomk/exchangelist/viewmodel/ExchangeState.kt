@@ -2,6 +2,13 @@ package com.studiomk.exchangelist.viewmodel
 
 import com.studiomk.domain.model.ExchangeUi
 
-data class ExchangeState(
-    val exchangeList: List<ExchangeUi> = listOf()
-)
+sealed class ExchangeState {
+
+    data class ExchangeLoadedState(
+        val exchangeList: List<ExchangeUi> = listOf()
+    ): ExchangeState()
+    data class ExchangeLoadError(
+        val errorMessage: String
+    ): ExchangeState()
+    data object ExchangeLoading: ExchangeState()
+}
