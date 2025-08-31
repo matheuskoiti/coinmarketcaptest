@@ -7,7 +7,7 @@ data class Exchange(
     val name: String,
     val slug: String,
     val logo: String,
-    val description: String,
+    val description: String?,
     @SerializedName("date_launched")
     val dateLaunched: String?,
     val notice: String?,

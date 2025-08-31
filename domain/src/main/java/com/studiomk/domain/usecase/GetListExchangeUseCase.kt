@@ -19,11 +19,11 @@ class GetListExchangeUseCase(
                 try {
                     Result.Success(createExchangeList(result))
                 } catch (e: Exception) {
-                    Result.Error("Error creating exchange list")
+                    Result.Error("Error creating exchange list: ${e.message}")
                 }
             }
             is RequestResult.Error -> {
-                Result.Error(result.error)
+                Result.Error("Network error: ${result.error}")
             }
         }
     }
@@ -36,7 +36,11 @@ class GetListExchangeUseCase(
                 logo = exchange.logo,
                 spotVolumeUsd = NumberFormat.getCurrencyInstance(Locale.US)
                     .format(exchange.spotVolumeUsd),
-                dateLaunched = exchange.dateLaunched?.formatDate() ?: ""
+                dateLaunched = exchange.dateLaunched?.formatDate() ?: "",
+                description = exchange.description ?: "",
+                url = exchange.urls.toString(), // map urls to readable,
+                takerFee = exchange.takerFee.toString(), // fix
+                makerFee = exchange.makerFee.toString() // fix
             )
         }
     }
