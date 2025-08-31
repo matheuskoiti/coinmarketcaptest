@@ -2,6 +2,7 @@ package com.studiomk.exchangelist.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.studiomk.domain.result.Result
 import com.studiomk.domain.usecase.GetListExchangeUseCase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -23,18 +24,20 @@ class ExchangeListViewModel(
     fun getExchangeList() {
         viewModelScope.launch(Dispatchers.IO) {
             _uiState.value = ExchangeState.ExchangeLoading
-            try {
-                getListExchangeUseCase.invoke().let { list ->
-                    _uiState.value = ExchangeState.ExchangeLoadedState(
-                        exchangeList = list
-                    )
+            getListExchangeUseCase().let { result ->
+                when(result) {
+                    is Result.Success -> {
+                        _uiState.value = ExchangeState.ExchangeLoadedState(
+                            exchangeList = result.data
+                        )
+                    }
+                    is Result.Error -> {
+                        _uiState.value = ExchangeState.ExchangeLoadError(
+                            errorMessage = result.error
+                        )
+                    }
                 }
-            } catch (e: Exception) {
-                _uiState.value = ExchangeState.ExchangeLoadError(
-                    errorMessage = e.message ?: "An error occurred"
-                )
             }
-
         }
     }
 }
