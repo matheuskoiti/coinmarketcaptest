@@ -11,7 +11,7 @@ class ExchangeRepository(
     suspend fun getExchangeList(): RequestResult<ApiResponse> {
         try {
             val key = "here"
-            val id = "270,12"
+            val id = "270,300,350,400,280,290"
             return RequestResult.Success(exchangeService.geExchangeList(key, id))
         } catch (e: Exception){
             return RequestResult.Error(e.message ?: "An error has occurred")
