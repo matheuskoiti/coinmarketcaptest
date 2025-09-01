@@ -14,10 +14,14 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 
 @Composable
 fun ExchangeDetailScreen(
     modifier: Modifier = Modifier,
+    navController: NavHostController,
+    exchangeId: String
 ) {
     Surface(
         modifier = modifier.padding(16.dp).fillMaxSize()
@@ -26,7 +30,7 @@ fun ExchangeDetailScreen(
             horizontalAlignment = Alignment.Start
         ) {
             Text(
-                text = "ID: 123345",
+                text = "ID: $exchangeId",
                 style = MaterialTheme.typography.bodyLarge
             )
             Spacer(modifier = Modifier.height(16.dp))
@@ -73,5 +77,5 @@ fun ExchangeDetailScreen(
 @Preview(showBackground = true)
 @Composable
 fun ExchangeDetailScreenPreview() {
-    ExchangeDetailScreen()
+    ExchangeDetailScreen(exchangeId = "12222", navController = rememberNavController())
 }

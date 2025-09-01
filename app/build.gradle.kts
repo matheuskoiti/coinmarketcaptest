@@ -52,8 +52,10 @@ dependencies {
 
     implementation("io.insert-koin:koin-android:4.0.0")
     implementation("io.insert-koin:koin-androidx-compose:4.0.0")
+    implementation("androidx.navigation:navigation-compose:2.7.1")
     implementation(project(":data"))
     implementation(project(":domain"))
+    implementation(project(":navigation"))
     implementation(project(":feature:exchangelist"))
     implementation(project(":feature:exchangedetail"))
 

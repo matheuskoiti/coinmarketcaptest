@@ -26,14 +26,16 @@ import com.studiomk.exchangelist.R
 @Composable
 fun ExchangeCard(
     exchangeUi: ExchangeUi,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onCardClick: () -> Unit
 ) {
     Card(
         modifier = modifier
             .fillMaxWidth()
             .wrapContentHeight(),
         elevation = CardDefaults.cardElevation(4.dp),
-        shape = RoundedCornerShape(12.dp)
+        shape = RoundedCornerShape(12.dp),
+        onClick = { onCardClick() }
     ) {
         Row(
             modifier = Modifier.padding(16.dp)

@@ -20,16 +20,19 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.studiomk.exchangelist.R
 import com.studiomk.exchangelist.viewmodel.ExchangeListViewModel
 import com.studiomk.exchangelist.viewmodel.ExchangeState
+import com.studiomk.navigation.NavigationItem
+import com.studiomk.navigation.Screen
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ExchangeListScreen(
     modifier: Modifier = Modifier,
+    navController: NavHostController,
     viewModel: ExchangeListViewModel = koinViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -39,7 +42,7 @@ fun ExchangeListScreen(
             LoadingScreen()
         }
         is ExchangeState.ExchangeLoadedState -> {
-            ExchangeList(uiState, modifier)
+            ExchangeList(uiState, modifier, navController)
         }
         is ExchangeState.ExchangeLoadError -> {
             ExchangeError(
@@ -100,7 +103,8 @@ private fun ExchangeError(
 @Composable
 private fun ExchangeList(
     uiState: ExchangeState,
-    modifier: Modifier
+    modifier: Modifier,
+    navController: NavHostController,
 ) {
     val exchangeList = (uiState as ExchangeState.ExchangeLoadedState).exchangeList
     LazyColumn(
@@ -110,13 +114,12 @@ private fun ExchangeList(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         items(exchangeList, key = { it.id }) { item ->
-            ExchangeCard(item)
+            ExchangeCard(
+                exchangeUi = item,
+                onCardClick = {
+                    navController.navigate("${Screen.EXCHANGE_DETAIL}/${item.id}")
+                }
+            )
         }
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-fun ExchangeListScreenPreview() {
-    ExchangeListScreen()
 }
