@@ -13,8 +13,8 @@ class GetListExchangeUseCase(
     private val exchangeRepository: ExchangeRepository
 ) {
 
-    suspend operator fun invoke(): Result<List<ExchangeUi>> {
-        return when (val result = exchangeRepository.getExchangeList()) {
+    suspend operator fun invoke(id: String? = null): Result<List<ExchangeUi>> {
+        return when (val result = exchangeRepository.getExchangeList(id)) {
             is RequestResult.Success -> {
                 try {
                     Result.Success(createExchangeList(result))
