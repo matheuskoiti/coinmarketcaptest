@@ -14,6 +14,7 @@ import androidx.compose.ui.Modifier
 import com.studiomk.coinmarketcaptest.ui.theme.CoinMarketCapTestTheme
 import com.studiomk.data.di.dataModule
 import com.studiomk.domain.di.domainModule
+import com.studiomk.exchangedetail.di.exchangeDetailModule
 import com.studiomk.exchangelist.di.exchangeListModule
 import com.studiomk.exchangelist.ui.ExchangeListScreen
 import org.koin.android.ext.koin.androidContext
@@ -47,6 +48,7 @@ class MainActivity : ComponentActivity() {
             modules(dataModule)
             modules(domainModule)
             modules(exchangeListModule)
+            modules(exchangeDetailModule)
         }
     }
 }
