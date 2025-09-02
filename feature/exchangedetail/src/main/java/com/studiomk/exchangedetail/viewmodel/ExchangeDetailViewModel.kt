@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.studiomk.domain.model.ExchangeUi
 import com.studiomk.domain.result.Result
+import com.studiomk.domain.usecase.GetExchangeAssetsUseCase
 import com.studiomk.domain.usecase.GetListExchangeUseCase
 import com.studiomk.exchangedetail.ui.ExchangeDetailState
 import kotlinx.coroutines.Dispatchers
@@ -13,7 +14,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class ExchangeDetailViewModel(
-    private val getListExchangeUseCase: GetListExchangeUseCase
+    private val getListExchangeUseCase: GetListExchangeUseCase,
+    private val getExchangeAssetsUseCase: GetExchangeAssetsUseCase
 ): ViewModel() {
 
 

@@ -2,6 +2,7 @@ package com.studiomk.domain.usecase
 
 import com.studiomk.data.RequestResult
 import com.studiomk.data.model.ApiResponse
+import com.studiomk.data.model.Exchange
 import com.studiomk.data.model.Urls
 import com.studiomk.data.repository.ExchangeRepository
 import com.studiomk.domain.extensions.formatDate
@@ -29,7 +30,7 @@ class GetListExchangeUseCase(
         }
     }
 
-    private fun createExchangeList(result: RequestResult.Success<ApiResponse>): List<ExchangeUi> {
+    private fun createExchangeList(result: RequestResult.Success<ApiResponse<Map<String, Exchange>>>): List<ExchangeUi> {
         return result.data.data.map { (key, exchange) ->
             ExchangeUi(
                 id = key,

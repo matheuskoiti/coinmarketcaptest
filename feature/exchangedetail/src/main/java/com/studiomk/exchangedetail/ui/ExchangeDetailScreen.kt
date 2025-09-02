@@ -10,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
@@ -83,7 +82,7 @@ private fun ExchangeDetailInfo(
     Box(
         modifier = modifier
             .padding(16.dp)
-            .fillMaxSize()
+            .fillMaxSize(),
     ) {
         Column(
             modifier = Modifier
@@ -91,14 +90,6 @@ private fun ExchangeDetailInfo(
                 .padding(bottom = 8.dp),
             horizontalAlignment = Alignment.Start
         ) {
-            Button(
-                modifier = Modifier
-                    .wrapContentWidth(),
-                onClick = { navController.popBackStack() }
-            ) {
-                Text(text = stringResource(R.string.exchange_detail_back))
-            }
-            Spacer(modifier = Modifier.height(24.dp))
             Row(
                 modifier = Modifier.padding(16.dp).fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -163,6 +154,14 @@ private fun ExchangeDetailInfo(
                 text = stringResource(R.string.exchange_date, exchangeUi.dateLaunched),
                 style = MaterialTheme.typography.bodyLarge
             )
+            Spacer(modifier = Modifier.height(24.dp))
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                onClick = { navController.popBackStack() }
+            ) {
+                Text(text = stringResource(R.string.exchange_detail_back))
+            }
         }
     }
 }
