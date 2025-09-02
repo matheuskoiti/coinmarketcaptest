@@ -53,9 +53,11 @@ fun ExchangeListScreen(
 }
 
 @Composable
-private fun LoadingScreen() {
+private fun LoadingScreen(
+    modifier: Modifier = Modifier,
+) {
     Box(
-        modifier = Modifier.fillMaxSize(),
+        modifier = modifier.fillMaxSize(),
         contentAlignment = Alignment.Center
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
@@ -71,10 +73,11 @@ private fun LoadingScreen() {
 
 @Composable
 private fun ExchangeError(
+    modifier: Modifier = Modifier,
     errorMessage: String,
     onTryAgainClick: () -> Unit
 ) {
-    Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+    Box(modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Text(
                 modifier = Modifier
@@ -115,6 +118,7 @@ private fun ExchangeList(
         items(exchangeList, key = { it.id }) { item ->
             ExchangeCard(
                 exchangeUi = item,
+                modifier = modifier,
                 onCardClick = {
                     navController.navigate("${Screen.EXCHANGE_DETAIL}/${item.id}")
                 }
