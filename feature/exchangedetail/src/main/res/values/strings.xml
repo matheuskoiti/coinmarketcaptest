@@ -8,6 +8,9 @@
     <string name="exchange_spot_volume_usd">Spot volume USD: %s</string>
     <string name="exchange_list_error">An error occurred: %s</string>
     <string name="exchange_list_error_try_again">Try again</string>
-    <string name="exchange_list_loading">Loading exchange list!!</string>
+    <string name="exchange_details_loading">Loading exchange details!!</string>
     <string name="exchange_detail_back">Return to list</string>
+    <string name="exchange_detail_asset_list">Currency list</string>
+    <string name="exchange_detail_see_more">See more</string>
+    <string name="exchange_detail_see_less">See less</string>
 </resources>

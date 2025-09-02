@@ -7,7 +7,7 @@ import com.studiomk.data.model.WalletData
 import com.studiomk.data.service.ExchangeService
 
 private const val FULL_ID_LIST = "270,300,350,400,280,290"
-private const val key = "key"
+private const val key = "90d7c8c3-5578-4174-8fa2-2e8f81159038"
 class ExchangeRepository(
     private val exchangeService: ExchangeService
 ) {

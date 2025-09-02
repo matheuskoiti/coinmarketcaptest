@@ -18,10 +18,14 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -35,6 +39,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.studiomk.domain.model.Currency
 import com.studiomk.domain.model.ExchangeUi
 import com.studiomk.exchangedetail.R
 import com.studiomk.exchangedetail.viewmodel.ExchangeDetailViewModel
@@ -56,9 +61,10 @@ fun ExchangeDetailScreen(
     when(uiState){
         is ExchangeDetailState.ExchangeDetailLoadedState -> {
             ExchangeDetailInfo(
-                modifier,
-                (uiState as ExchangeDetailState.ExchangeDetailLoadedState).exchange,
-                navController
+                modifier = modifier,
+                exchangeUi = (uiState as ExchangeDetailState.ExchangeDetailLoadedState).assets.exchangeUi,
+                currencyList = (uiState as ExchangeDetailState.ExchangeDetailLoadedState).assets.currencyList,
+                navController = navController
             )
         }
         is ExchangeDetailState.ExchangeLoadError -> {
@@ -77,6 +83,7 @@ fun ExchangeDetailScreen(
 private fun ExchangeDetailInfo(
     modifier: Modifier,
     exchangeUi: ExchangeUi,
+    currencyList: List<Currency>,
     navController: NavHostController
 ) {
     Box(
@@ -94,7 +101,6 @@ private fun ExchangeDetailInfo(
                 modifier = Modifier.padding(16.dp).fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
-
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
                         .data(exchangeUi.logo)
@@ -154,6 +160,11 @@ private fun ExchangeDetailInfo(
                 text = stringResource(R.string.exchange_date, exchangeUi.dateLaunched),
                 style = MaterialTheme.typography.bodyLarge
             )
+
+            if (currencyList.isNotEmpty()) {
+                CurrencyListCard(modifier, currencyList)
+            }
+
             Spacer(modifier = Modifier.height(24.dp))
             Button(
                 modifier = Modifier
@@ -161,6 +172,59 @@ private fun ExchangeDetailInfo(
                 onClick = { navController.popBackStack() }
             ) {
                 Text(text = stringResource(R.string.exchange_detail_back))
+            }
+        }
+    }
+}
+
+@Composable
+private fun CurrencyListCard(
+    modifier: Modifier,
+    currencyList: List<Currency>
+) {
+    var expanded by rememberSaveable { mutableStateOf(false) }
+    val displayedList = if (expanded) currencyList else currencyList.take(5)
+
+    Spacer(modifier = Modifier.height(24.dp))
+    Surface(
+        modifier = modifier.padding(8.dp),
+        color = MaterialTheme.colorScheme.surfaceVariant,
+        shadowElevation = 4.dp,
+        shape = RoundedCornerShape(12.dp)
+    ) {
+        Column {
+            Text(
+                modifier = Modifier.padding(8.dp),
+                text = stringResource(R.string.exchange_detail_asset_list),
+                style = MaterialTheme.typography.bodyLarge,
+                fontWeight = FontWeight.Bold,
+            )
+            displayedList.forEach { currency ->
+                Row(
+                    modifier = Modifier.fillMaxWidth().padding(8.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = currency.name,
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                    Text(
+                        text = currency.priceUsd,
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                }
+            }
+            if (currencyList.size > 5) {
+                TextButton(
+                    onClick = { expanded = !expanded },
+                    modifier = Modifier.align(Alignment.CenterHorizontally)
+                ) {
+                    Text(
+                        text = if (expanded) stringResource(R.string.exchange_detail_see_less) else stringResource(R.string.exchange_detail_see_more),
+                        style = MaterialTheme.typography.bodyMedium,
+                        fontWeight = FontWeight.Bold
+                    )
+                }
             }
         }
     }
@@ -176,7 +240,7 @@ private fun LoadingScreen() {
             CircularProgressIndicator()
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text = stringResource(R.string.exchange_list_loading),
+                text = stringResource(R.string.exchange_details_loading),
                 style = MaterialTheme.typography.bodyMedium
             )
         }

@@ -2,10 +2,8 @@ package com.studiomk.exchangedetail.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.studiomk.domain.model.ExchangeUi
 import com.studiomk.domain.result.Result
-import com.studiomk.domain.usecase.GetExchangeAssetsUseCase
-import com.studiomk.domain.usecase.GetListExchangeUseCase
+import com.studiomk.domain.usecase.GetExchangeDetailsUseCase
 import com.studiomk.exchangedetail.ui.ExchangeDetailState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,8 +12,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class ExchangeDetailViewModel(
-    private val getListExchangeUseCase: GetListExchangeUseCase,
-    private val getExchangeAssetsUseCase: GetExchangeAssetsUseCase
+    private val getExchangeDetailsUseCase: GetExchangeDetailsUseCase
 ): ViewModel() {
 
 
@@ -25,7 +22,7 @@ class ExchangeDetailViewModel(
     fun loadDetails(id: String) {
         _uiState.value = ExchangeDetailState.ExchangeLoading
         viewModelScope.launch(Dispatchers.IO) {
-            getListExchangeUseCase(id).let { result ->
+            getExchangeDetailsUseCase(id).let { result ->
                 when(result) {
                     is Result.Error -> {
                         _uiState.value = ExchangeDetailState.ExchangeLoadError(
@@ -34,7 +31,7 @@ class ExchangeDetailViewModel(
                     }
                     is Result.Success -> {
                         _uiState.value = ExchangeDetailState.ExchangeDetailLoadedState(
-                            exchange = result.data.first()
+                            assets = result.data,
                         )
                     }
                 }

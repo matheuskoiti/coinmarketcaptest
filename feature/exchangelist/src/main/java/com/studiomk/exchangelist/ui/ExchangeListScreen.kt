@@ -25,7 +25,6 @@ import androidx.navigation.NavHostController
 import com.studiomk.exchangelist.R
 import com.studiomk.exchangelist.viewmodel.ExchangeListViewModel
 import com.studiomk.exchangelist.viewmodel.ExchangeState
-import com.studiomk.navigation.NavigationItem
 import com.studiomk.navigation.Screen
 import org.koin.androidx.compose.koinViewModel
 
