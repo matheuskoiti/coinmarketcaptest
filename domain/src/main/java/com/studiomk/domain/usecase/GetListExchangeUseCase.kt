@@ -2,6 +2,7 @@ package com.studiomk.domain.usecase
 
 import com.studiomk.data.RequestResult
 import com.studiomk.data.model.ApiResponse
+import com.studiomk.data.model.Urls
 import com.studiomk.data.repository.ExchangeRepository
 import com.studiomk.domain.extensions.formatDate
 import com.studiomk.domain.model.ExchangeUi
@@ -34,15 +35,22 @@ class GetListExchangeUseCase(
                 id = key,
                 name = exchange.name,
                 logo = exchange.logo,
-                spotVolumeUsd = NumberFormat.getCurrencyInstance(Locale.US)
-                    .format(exchange.spotVolumeUsd),
+                spotVolumeUsd = mapToCurrency(exchange.spotVolumeUsd),
                 dateLaunched = exchange.dateLaunched?.formatDate() ?: "",
                 description = exchange.description ?: "",
-                url = exchange.urls.toString(), // map urls to readable,
-                takerFee = exchange.takerFee.toString(), // fix
-                makerFee = exchange.makerFee.toString() // fix
+                url = extractWebsiteUrl(exchange.urls),
+                takerFee = mapToCurrency(exchange.takerFee)
+                    .format(exchange.takerFee),
+                makerFee = mapToCurrency(exchange.makerFee)
             )
         }
     }
 
+    private fun mapToCurrency(value: Double): String =
+        NumberFormat.getCurrencyInstance(Locale.US)
+            .format(value)
+
+    private fun extractWebsiteUrl(urls: Urls): String {
+        return urls.website.joinToString(",")
+    }
 }

@@ -26,7 +26,9 @@ class ExchangeDetailViewModel(
             getListExchangeUseCase(id).let { result ->
                 when(result) {
                     is Result.Error -> {
-                        // TODO
+                        _uiState.value = ExchangeDetailState.ExchangeLoadError(
+                            errorMessage = result.error
+                        )
                     }
                     is Result.Success -> {
                         _uiState.value = ExchangeDetailState.ExchangeDetailLoadedState(
