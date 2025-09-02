@@ -2,7 +2,6 @@
 <resources>
     <string name="exchange_logo">Logo</string>
     <string name="exchange_date">Date launched: %s</string>
-    <string name="exchange_description">Description: %s</string>
     <string name="exchange_urls">Website: %s</string>
     <string name="exchange_taker_fee">Taker fee: %s</string>
     <string name="exchange_maker_fee">Maker fee: %s</string>

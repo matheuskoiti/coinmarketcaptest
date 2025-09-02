@@ -1,5 +1,6 @@
 package com.studiomk.exchangedetail.ui
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -9,7 +10,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -88,7 +88,7 @@ private fun ExchangeDetailInfo(
         Column(
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
-                .padding(bottom = 80.dp),
+                .padding(bottom = 8.dp),
             horizontalAlignment = Alignment.Start
         ) {
             Button(
@@ -99,15 +99,11 @@ private fun ExchangeDetailInfo(
                 Text(text = stringResource(R.string.exchange_detail_back))
             }
             Spacer(modifier = Modifier.height(24.dp))
-            Text(
-                text = "ID: ${exchangeUi.id}",
-                style = MaterialTheme.typography.bodyLarge,
-                fontWeight = FontWeight.Bold
-            )
-            Spacer(modifier = Modifier.height(16.dp))
             Row(
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(16.dp).fillMaxWidth(),
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
+
                 AsyncImage(
                     model = ImageRequest.Builder(LocalContext.current)
                         .data(exchangeUi.logo)
@@ -126,12 +122,27 @@ private fun ExchangeDetailInfo(
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Bold
                 )
+                Text(
+                    text = "ID: ${exchangeUi.id}",
+                    modifier = Modifier.padding(16.dp),
+                    style = MaterialTheme.typography.bodyLarge,
+                    fontWeight = FontWeight.Bold,
+                )
             }
-            Spacer(modifier = Modifier.height(32.dp))
-            Text(
-                text = stringResource(R.string.exchange_description, exchangeUi.description),
-                style = MaterialTheme.typography.bodyLarge
-            )
+            if (exchangeUi.description.isNotEmpty()) {
+                Surface(
+                    modifier = Modifier.padding(8.dp),
+                    color = MaterialTheme.colorScheme.surfaceVariant,
+                    shadowElevation = 4.dp,
+                    shape = RoundedCornerShape(12.dp)
+                ) {
+                    Text(
+                        modifier = Modifier.padding(16.dp),
+                        text = exchangeUi.description,
+                        style = MaterialTheme.typography.bodyLarge
+                    )
+                }
+            }
             Spacer(modifier = Modifier.height(32.dp))
             Text(
                 text = stringResource(R.string.exchange_urls, exchangeUi.url),
