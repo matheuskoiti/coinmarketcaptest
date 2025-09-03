@@ -10,9 +10,9 @@ android {
 
     defaultConfig {
         minSdk = 24
+        targetSdk = 35
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
     }
 
     buildTypes {
@@ -36,6 +36,11 @@ android {
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "4.0.0"
+    }
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1,LICENSE.md,LICENSE-notice.md}"
+        }
     }
 }
 
@@ -65,4 +70,6 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+    androidTestImplementation("io.mockk:mockk-android:1.14.5")
+
 }

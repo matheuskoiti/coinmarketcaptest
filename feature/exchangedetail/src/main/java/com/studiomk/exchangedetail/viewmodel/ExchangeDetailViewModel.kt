@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.studiomk.domain.result.Result
 import com.studiomk.domain.usecase.GetExchangeDetailsUseCase
-import com.studiomk.exchangedetail.ui.ExchangeDetailState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

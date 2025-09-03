@@ -1,4 +1,4 @@
-package com.studiomk.exchangedetail.ui
+package com.studiomk.exchangedetail.viewmodel
 
 import com.studiomk.domain.model.ExchangeAssetUi
 

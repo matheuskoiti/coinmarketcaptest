@@ -4,25 +4,27 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.studiomk.domain.result.Result
 import com.studiomk.domain.usecase.GetListExchangeUseCase
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class ExchangeListViewModel(
-    private val getListExchangeUseCase: GetListExchangeUseCase
+open class ExchangeListViewModel(
+    private val getListExchangeUseCase: GetListExchangeUseCase,
+    private val dispatcher: CoroutineDispatcher = Dispatchers.IO
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<ExchangeState>(ExchangeState.ExchangeLoading)
-    val uiState: StateFlow<ExchangeState> = _uiState.asStateFlow()
+    open val uiState: StateFlow<ExchangeState> = _uiState.asStateFlow()
 
     init {
         getExchangeList()
     }
 
     fun getExchangeList() {
-        viewModelScope.launch(Dispatchers.IO) {
+        viewModelScope.launch(dispatcher) {
             _uiState.value = ExchangeState.ExchangeLoading
             getListExchangeUseCase().let { result ->
                 when(result) {

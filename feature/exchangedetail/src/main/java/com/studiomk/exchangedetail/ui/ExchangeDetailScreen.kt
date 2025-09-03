@@ -42,6 +42,7 @@ import coil.request.ImageRequest
 import com.studiomk.domain.model.Currency
 import com.studiomk.domain.model.ExchangeUi
 import com.studiomk.exchangedetail.R
+import com.studiomk.exchangedetail.viewmodel.ExchangeDetailState
 import com.studiomk.exchangedetail.viewmodel.ExchangeDetailViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -80,7 +81,7 @@ fun ExchangeDetailScreen(
 }
 
 @Composable
-private fun ExchangeDetailInfo(
+fun ExchangeDetailInfo(
     modifier: Modifier,
     exchangeUi: ExchangeUi,
     currencyList: List<Currency>,

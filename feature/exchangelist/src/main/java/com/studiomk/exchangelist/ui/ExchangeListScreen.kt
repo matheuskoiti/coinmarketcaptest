@@ -22,6 +22,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
+import androidx.navigation.compose.rememberNavController
 import com.studiomk.exchangelist.R
 import com.studiomk.exchangelist.viewmodel.ExchangeListViewModel
 import com.studiomk.exchangelist.viewmodel.ExchangeState
@@ -31,7 +32,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun ExchangeListScreen(
     modifier: Modifier = Modifier,
-    navController: NavHostController,
+    navController: NavHostController = rememberNavController(),
     viewModel: ExchangeListViewModel = koinViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
@@ -103,7 +104,7 @@ private fun ExchangeError(
 }
 
 @Composable
-private fun ExchangeList(
+fun ExchangeList(
     uiState: ExchangeState,
     modifier: Modifier,
     navController: NavHostController,
