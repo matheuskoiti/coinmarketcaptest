@@ -38,6 +38,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation("io.insert-koin:koin-android:4.0.0")
+    testImplementation("io.mockk:mockk:1.14.5")
     implementation(project(":data"))
 
     testImplementation(libs.junit)

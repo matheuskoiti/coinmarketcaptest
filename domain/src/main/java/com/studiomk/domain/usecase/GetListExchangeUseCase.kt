@@ -6,6 +6,7 @@ import com.studiomk.data.model.Exchange
 import com.studiomk.data.model.Urls
 import com.studiomk.data.repository.ExchangeRepository
 import com.studiomk.domain.extensions.formatDate
+import com.studiomk.domain.extensions.mapToCurrency
 import com.studiomk.domain.model.ExchangeUi
 import com.studiomk.domain.result.Result
 import java.text.NumberFormat
@@ -36,20 +37,15 @@ class GetListExchangeUseCase(
                 id = key,
                 name = exchange.name,
                 logo = exchange.logo,
-                spotVolumeUsd = mapToCurrency(exchange.spotVolumeUsd),
+                spotVolumeUsd = exchange.spotVolumeUsd.mapToCurrency(),
                 dateLaunched = exchange.dateLaunched?.formatDate() ?: "",
                 description = exchange.description ?: "",
                 url = extractWebsiteUrl(exchange.urls),
-                takerFee = mapToCurrency(exchange.takerFee)
-                    .format(exchange.takerFee),
-                makerFee = mapToCurrency(exchange.makerFee)
+                takerFee = exchange.takerFee.mapToCurrency(),
+                makerFee = exchange.makerFee.mapToCurrency()
             )
         }
     }
-
-    private fun mapToCurrency(value: Double): String =
-        NumberFormat.getCurrencyInstance(Locale.US)
-            .format(value)
 
     private fun extractWebsiteUrl(urls: Urls): String {
         return urls.website.joinToString(",")

@@ -3,12 +3,11 @@ package com.studiomk.domain.usecase
 import com.studiomk.data.RequestResult
 import com.studiomk.data.model.WalletData
 import com.studiomk.data.repository.ExchangeRepository
+import com.studiomk.domain.extensions.mapToCurrency
 import com.studiomk.domain.model.Currency
 import com.studiomk.domain.model.ExchangeAssetUi
 import com.studiomk.domain.model.ExchangeUi
 import com.studiomk.domain.result.Result
-import java.text.NumberFormat
-import java.util.Locale
 
 class GetExchangeDetailsUseCase(
     private val repository: ExchangeRepository,
@@ -46,12 +45,9 @@ class GetExchangeDetailsUseCase(
         return ExchangeAssetUi(
             exchangeUi = exchangeUi,
             currencyList = data.map {
-                Currency(it.currency.name, mapToCurrency(it.currency.priceUsd))
+                Currency(it.currency.name, it.currency.priceUsd.mapToCurrency())
             }
         )
     }
 
-    private fun mapToCurrency(value: Double): String =
-        NumberFormat.getCurrencyInstance(Locale.US)
-            .format(value)
 }
